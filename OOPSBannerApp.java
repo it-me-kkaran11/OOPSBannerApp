@@ -5,31 +5,19 @@ public class OOPSBannerApp {
 
     public static void main(String[] args) {
 
-        // Create character pattern map
-        Map<Character, CharacterPattern> patternMap = initializePatterns();
+        Map<Character, String[]> patternMap = buildPatternMap();
 
         String word = "OOPS";
 
-        // Print 7 rows
-        for (int row = 0; row < 7; row++) {
-
-            StringBuilder line = new StringBuilder();
-
-            for (char ch : word.toCharArray()) {
-                CharacterPattern cp = patternMap.get(ch);
-                line.append(cp.getPattern()[row]).append("  ");
-            }
-
-            System.out.println(line);
-        }
+        renderBanner(word, patternMap);
     }
 
-    // Static method to initialize character patterns
-    public static Map<Character, CharacterPattern> initializePatterns() {
+    // Build and store character patterns using HashMap
+    public static Map<Character, String[]> buildPatternMap() {
 
-        Map<Character, CharacterPattern> map = new HashMap<>();
+        Map<Character, String[]> map = new HashMap<>();
 
-        map.put('O', new CharacterPattern('O', new String[]{
+        map.put('O', new String[]{
                 "  *****  ",
                 " **   ** ",
                 "**     **",
@@ -37,9 +25,9 @@ public class OOPSBannerApp {
                 "**     **",
                 " **   ** ",
                 "  *****  "
-        }));
+        });
 
-        map.put('P', new CharacterPattern('P', new String[]{
+        map.put('P', new String[]{
                 " ******  ",
                 " **   ** ",
                 " **   ** ",
@@ -47,9 +35,9 @@ public class OOPSBannerApp {
                 " **      ",
                 " **      ",
                 " **      "
-        }));
+        });
 
-        map.put('S', new CharacterPattern('S', new String[]{
+        map.put('S', new String[]{
                 "  *****  ",
                 " **   ** ",
                 " **      ",
@@ -57,28 +45,26 @@ public class OOPSBannerApp {
                 "      ** ",
                 " **   ** ",
                 "  *****  "
-        }));
+        });
 
         return map;
     }
 
-    // Static Inner Class
-    static class CharacterPattern {
+    // Render banner using nested loops and StringBuilder
+    public static void renderBanner(String word, Map<Character, String[]> map) {
 
-        private char character;
-        private String[] pattern;
+        for (int row = 0; row < 7; row++) {
 
-        public CharacterPattern(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
+            StringBuilder line = new StringBuilder();
 
-        public char getCharacter() {
-            return character;
-        }
+            for (char ch : word.toCharArray()) {
+                String[] pattern = map.get(ch);
+                if (pattern != null) {
+                    line.append(pattern[row]).append("  ");
+                }
+            }
 
-        public String[] getPattern() {
-            return pattern;
+            System.out.println(line);
         }
     }
 }
